@@ -150,14 +150,27 @@ class Address(models.Model):
 
 
 class Payment(models.Model):
-    stripe_charge_id = models.CharField(max_length=50)
+    stripe_charge_id = models.CharField(max_length=50, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.SET_NULL, blank=True, null=True)
     amount = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    # paystack
+    api_id = models.IntegerField(blank=True, null=True)
+    access_code = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=100, blank=True, null=True)
+    reference = models.CharField(max_length=100, blank=True, null=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
+    paid = models.BooleanField(default=False)
+    paid_at = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True)
+    authorization_url = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 class Coupon(models.Model):

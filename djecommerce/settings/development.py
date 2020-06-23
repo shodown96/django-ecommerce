@@ -45,6 +45,7 @@ DATABASES = {
 
 STRIPE_PUBLIC_KEY = 'sk_test_4eC39HqLyjWDarjtT1zdp7dc'
 STRIPE_SECRET_KEY = 'sk_test_4eC39HqLyjWDarjtT1zdp7dc'
+PAYSTACK_API = ""
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST = os.environ.get("EMAIL_HOST")
