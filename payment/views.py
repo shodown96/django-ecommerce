@@ -38,14 +38,14 @@ def ref_code():
 def pay(request):
     try:
         order = Order.objects.get(user=request.user, ordered=False)
-        amount = int(order.get_total() * 100)
+        amount = int(order.get_total())
 
         url = "https://api.paystack.co/transaction/initialize"
         current_site = get_current_site(request)
         domain = current_site.domain
         payload = {
             "email": request.user.email,
-            "amount": amount,
+            "amount": (amount * 100),
             "currency": "NGN",
             "callback_url": f"http://{domain}/payment/callback/verify/",
             "metadata": {
