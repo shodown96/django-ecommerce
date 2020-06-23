@@ -134,7 +134,7 @@ def verify(request, payment_id):
 
     response = requests.request("GET", url, headers=headers)
 
-    print(response.text.encode('utf8'), '\n')
+    # print(response.text.encode('utf8'), '\n')
     r = response.json()
     print(json.dumps(r, indent=4))
     if response.status_code == 200:
