@@ -35,20 +35,7 @@ def ref_code():
     return reference
 
 
-# Create your views here. REMEMBER TO CHECK FOR DOMAIN != "TEST"
-
-    # create the payment
-    # payment = Payment()
-    # payment.stripe_charge_id = charge['id']
-    # payment.user = self.request.user
-    # payment.amount = order.get_total()
-    # payment.save()
-
-    # assign the payment to the order
-
-
 def pay(request):
-    # userprofile = UserProfile.objects.get(user=request.user)
     try:
         order = Order.objects.get(user=request.user, ordered=False)
         amount = int(order.get_total() * 100)
@@ -129,13 +116,14 @@ def callback(request):
 
 
 def cancel(request):
+    payment = Payment.objects.filter(user=request.user, status="abandoned")[0]
+    payment.delete()
     messages.info(request, "Changed your mind? No problem.")
     return redirect('core:home')
 
 
 def verify(request, payment_id):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
-    # userprofile = UserProfile.objects.get(user=request.user)
     payment = Payment.objects.get(id=payment_id)
     message = False
     url = f"https://api.paystack.co/transaction/verify/{payment.reference}"

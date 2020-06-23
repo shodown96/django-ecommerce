@@ -26,10 +26,10 @@ admin_verify_payment.short_description = "Verify Payments"
 
 def delete_abandoned_payment(modeladmin, request, queryset):
     count = 0
-    for x in queryset:
-        if x.status == "abandoned":
-            count += 1
-            x.paid = True
+    deleted = queryset.filter(status="abandoned")
+    count = deleted.count()
+    deleted.delete()
+
     if count > 0:
         messages.success(request, f"Deleted {str(count)} abandoned payments")
     else:
