@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <main>
+    <div class="container">
+
+      <!--Navbar-->
+      <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
+
+        <!-- Navbar brand -->
+        <span class="navbar-brand">Categories:</span>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+          <!-- Links -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">All
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Shirts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sport wears</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Outwears</a>
+            </li>
+
+          </ul>
+          <!-- Links -->
+
+          <form class="form-inline">
+            <div class="md-form my-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            </div>
+          </form>
+        </div>
+        <!-- Collapsible content -->
+
+      </nav>
+      <!--/.Navbar-->
+
+      <!--Section: Products v.3-->
+      <section class="text-center mb-4">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card text-left">
+              <div class="card-header primary-color text-white">Filter</div>
+               <div class="card-body">
+                  <div class="filter-widget">
+                    <h4 class="fw-title">Categories</h4>
+                    <ul class="nav flex-column py-2">
+                       <li class="nav-item">
+                           <a class="nav-link active" href="#!">Active</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="#!">Men</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="#!">Women</a>
+                       </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="#!">Kids</a>
+                       </li>
+                  </div>
+                  <div class="filter-widget py-2">
+                    <h4 class="fw-title">Brand</h4>
+                    <div class="fw-brand-check">
+                        <div class="bc-item">
+                            <label for="bc-calvin">
+                                <input type="checkbox" id="bc-calvin">
+                                <span class="checkmark"></span>
+                                Calvin Klein
+                            </label>
+                        </div>
+                        <div class="bc-item">
+                            <label for="bc-diesel">
+                                <input type="checkbox" id="bc-diesel">
+                                <span class="checkmark"></span>
+                                Diesel
+                            </label>
+                        </div>
+                        <div class="bc-item">
+                            <label for="bc-polo">
+                                <input type="checkbox" id="bc-polo">
+                                <span class="checkmark"></span>
+                                Polo
+                            </label>
+                        </div>
+                        <div class="bc-item">
+                            <label for="bc-tommy">
+                                <input type="checkbox" id="bc-tommy">
+                                <span class="checkmark"></span>
+                                Tommy Hilfiger
+                            </label>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="filter-widget py-2">
+                        <h4 class="fw-title">Price</h4>
+                        <label for="customRange1">Price range</label>
+                        <input type="range" class="custom-range" id="customRange1">
+                  </div>
+                  <div class="filter-widget py-2">
+                    <h4 class="fw-title">Color</h4>
+                    <div class="fw-color-choose row">
+                        <div class="cs-item col-6">
+                            <input type="radio" id="cs-black">
+                            <label class="cs-black" for="cs-black">Black</label>
+                        </div>
+                        <div class="cs-item col-6">
+                            <input type="radio" id="cs-violet">
+                            <label class="cs-violet" for="cs-violet">Violet</label>
+                        </div>
+                        <div class="cs-item col-6">
+                            <input type="radio" id="cs-blue">
+                            <label class="cs-blue" for="cs-blue">Blue</label>
+                        </div>
+                        <div class="cs-item col-6">
+                            <input type="radio" id="cs-yellow">
+                            <label class="cs-yellow" for="cs-yellow">Yellow</label>
+                        </div>
+                        <div class="cs-item col-6">
+                            <input type="radio" id="cs-red">
+                            <label class="cs-red" for="cs-red">Red</label>
+                        </div>
+                        <div class="cs-item col-6">
+                            <input type="radio" id="cs-green">
+                            <label class="cs-green" for="cs-green">Green</label>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="filter-widget py-2 text-uppercase">
+                    <h4 class="fw-title">Size</h4>
+                    <div class="fw-size-choose row">
+                        <div class="sc-item col-3">
+                            <input type="radio" id="s-size">
+                            <label for="s-size">s</label>
+                        </div>
+                        <div class="sc-item col-3">
+                            <input type="radio" id="m-size">
+                            <label for="m-size">m</label>
+                        </div>
+                        <div class="sc-item col-3">
+                            <input type="radio" id="l-size">
+                            <label for="l-size">l</label>
+                        </div>
+                        <div class="sc-item col-3">
+                            <input type="radio" id="xs-size">
+                            <label for="xs-size">xs</label>
+                        </div>
+                    </div>
+                  </div>
+                  <a href="#" class="btn btn-primary">Apply</a>
+                  <div class="filter-widget py-2">
+                    <h4 class="fw-title">Tags</h4>
+                    <div class="fw-tags row px-0 text-center">
+                        <a href="#" class="badge blue col-4 p-2 m-1">Towel</a>
+                        <a href="#" class="badge blue col-4 p-2 m-1">Shoes</a>
+                        <a href="#" class="badge blue col-4 p-2 m-1">Coat</a>
+                        <a href="#" class="badge blue col-4 p-2 m-1">Dresses</a>
+                        <a href="#" class="badge blue col-4 p-2 m-1">Trousers</a>
+                        <a href="#" class="badge blue col-4 p-2 m-1">Men's hats</a>
+                        <a href="#" class="badge blue col-4 p-2 m-1">Backpack</a>
+                    </div>
+                  </div>
+               </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="row wow fadeIn">
+
+              {% for item in object_list %}
+              <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="card">
+
+                  <div class="view overlay">
+                    {% comment %} <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg" class="card-img-top"> {% endcomment %}
+                    <img src="{{ item.image.url }}" class="card-img-top">
+                    <a href="{{ item.get_absolute_url }}">
+                      <div class="mask rgba-white-slight"></div>
+                    </a>
+                  </div>
+
+                  <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                      <h5>{{ item.get_category_display }}</h5>
+                    </a>
+                    <h5>
+                      <strong>
+                        <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+                          <span class="badge badge-pill {{ item.get_label_display }}-color">NEW</span>
+                        </a>
+                      </strong>
+                    </h5>
+
+                    <h4 class="font-weight-bold blue-text">
+                      <strong>$
+                      {% if item.discount_price %}
+                      {{ item.discount_price }}
+                      {% else %}
+                      {{ item.price }}
+                      {% endif %}
+                      </strong>
+                    </h4>
+
+                  </div>
+
+                </div>
+
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+      </section>
+      <!--Section: Products v.3-->
+
+      <!--Pagination-->
+
+      {% if is_paginated %}
+      <nav class="d-flex justify-content-center wow fadeIn">
+        <ul class="pagination pg-blue">
+
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% endif %}
+
+          <li class="page-item active">
+            <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+
+    </div>
+  </main>
+
+{% endblock content %}
+
+

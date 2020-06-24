@@ -347,8 +347,21 @@ class PaymentView(View):
 
 class HomeView(ListView):
     model = Item
-    paginate_by = 10
+    paginate_by = 5
     template_name = "home.html"
+
+
+class ShopView(ListView):
+    model = Item
+    paginate_by = 10
+    template_name = "shop.html"
+
+
+class ContactView(View):
+    template_name = "contact.html"
+
+    def get(self, *args, **kwargs):
+        return render(self.request, self.template_name)
 
 
 class OrderSummaryView(LoginRequiredMixin, View):

@@ -1,11 +1,11 @@
 {% load cart_template_tags %}
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light primary-color  scrolling-navbar">
     <div class="container">
 
       <!-- Brand -->
       <a class="navbar-brand waves-effect" href="/">
-        <strong class="blue-text">DJe-commerce</strong>
+        <strong class="text-white">DJE-commerce</strong>
       </a>
 
       <!-- Collapse -->
@@ -19,20 +19,43 @@
 
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
-          {% comment %} <li class="nav-item active">
-            <a class="nav-link waves-effect" href="/">Home
+           <li class="nav-item active">
+            <a class="nav-link waves-effect" href="{% url 'core:home' %}">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="/checkout">
-            Checkout</a>
-          </li> {% endcomment %}
+            <a class="nav-link waves-effect" href="{% url 'core:shop' %}">
+              <span class="clearfix d-none d-sm-inline-block"> Shop </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'core:contact' %}">
+              <span class="clearfix d-none d-sm-inline-block"> Contact </span>
+            </a>
+          </li>
         </ul>
 
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
           {% if request.user.is_authenticated %}
+          {% if request.user|cart_item_count  > 0 %}
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'core:checkout' %}">
+            Checkout</a>
+          </li>
+          {% endif %}
+
+          <!-- Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Wishlist</a>
+            <div class="dropdown-menu dropdown-secondary" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item waves-effect waves-light" href="#">Action</a>
+              <a class="dropdown-item waves-effect waves-light" href="#">Another action</a>
+              <a class="dropdown-item waves-effect waves-light" href="#">Something else here</a>
+            </div>
+          </li>          
           <li class="nav-item">
             <a href="{% url 'core:order-summary' %}" class="nav-link waves-effect">
               <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
@@ -41,13 +64,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="{% url 'account_logout' %}">
+            <a class="nav-link waves-effect btn-outline-white" href="{% url 'account_logout' %}">
               <span class="clearfix d-none d-sm-inline-block"> Logout </span>
             </a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link waves-effect" href="{% url 'account_login' %}">
+            <a class="nav-link waves-effect btn-outline-white" href="{% url 'account_login' %}">
               <span class="clearfix d-none d-sm-inline-block"> Login </span>
             </a>
           </li>
