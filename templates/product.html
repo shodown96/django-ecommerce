@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% block head_title %}{{object.title}}{% endblock %}
 {% block content %}
 
   <main class="mt-5 pt-4">
@@ -11,7 +11,7 @@
         <!--Grid column-->
         <div class="col-md-6 mb-4">
 
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">
+          <img src="{{object.image.url}}" class="img-fluid" alt="">
 
         </div>
         <!--Grid column-->
@@ -23,9 +23,8 @@
           <div class="p-4">
 
             <div class="mb-3">
-              <a href="">
+            <p class="h4">{{object.title}}</p>  
                 <span class="badge purple mr-1">{{ object.get_category_display }}</span>
-              </a>
             </div>
 
             <p class="lead">

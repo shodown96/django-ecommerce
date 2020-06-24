@@ -1,6 +1,7 @@
 from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
+from .models import CATEGORY_CHOICES, COLORS, SIZES, BRANDS
 
 
 PAYMENT_CHOICES = (
@@ -60,3 +61,15 @@ class PaymentForm(forms.Form):
     stripeToken = forms.CharField(required=False)
     save = forms.BooleanField(required=False)
     use_default = forms.BooleanField(required=False)
+
+
+class FilterForm(forms.Form):
+    category = forms.CharField(widget=forms.Select(
+        choices=CATEGORY_CHOICES), required=False)
+    tag = forms.CharField(required=False)
+    brands = forms.MultipleChoiceField(
+        choices=BRANDS, required=False, widget=forms.CheckboxSelectMultiple)
+    colors = forms.MultipleChoiceField(
+        choices=COLORS, required=False, widget=forms.CheckboxSelectMultiple)
+    sizes = forms.MultipleChoiceField(
+        choices=SIZES, required=False, widget=forms.CheckboxSelectMultiple)

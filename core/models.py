@@ -23,6 +23,26 @@ ADDRESS_CHOICES = (
     ('S', 'Shipping'),
 )
 
+COLORS = (
+    ('red', "red"),
+    ("blue", "blue"),
+    ("indigo", "indigo"),
+    ("yellow", "yellow")
+)
+
+SIZES = (
+    ("S", "S"),
+    ("M", "M"),
+    ("L", "L"),
+    ("XS", "XS")
+)
+BRANDS = (
+    ("CK", "Calvin Klein"),
+    ("D", "Diesel"),
+    ("P", "Polo"),
+    ("TH", "Tommy Hilfer")
+)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(

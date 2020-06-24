@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, FilterForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
 
 import random
@@ -33,6 +33,10 @@ def is_valid_form(values):
         if field == '':
             valid = False
     return valid
+
+
+def is_valid(param):
+    return param != '' and param is not None
 
 
 class CheckoutView(View):
@@ -355,6 +359,44 @@ class ShopView(ListView):
     model = Item
     paginate_by = 10
     template_name = "shop.html"
+    ordering = ['title']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = FilterForm
+        form = FilterForm(data=self.request.GET)
+        items = Item.objects.all()
+
+        if form.is_valid():
+            category = form.cleaned_data['category']
+            tag = form.cleaned_data['tag']
+            colors = self.request.GET.getlist("colors")
+            sizes = self.request.GET.getlist("sizes")
+            brands = self.request.GET.getlist("brands")
+            if is_valid(category):
+                items = items.filter(category=category)
+                context['category'] = True
+            if is_valid(tag):
+                items = items.filter(tag=tag)
+                context['tag'] = True
+            if is_valid_form(colors):
+                for x in colors:
+                    print(x)
+                    # items = items.filter(color=x)
+                context['tags'] = True
+            if is_valid_form(sizes):
+                for x in sizes:
+                    items = items.filter(size=x)
+                context['sizes'] = True
+            if is_valid_form(brands):
+                for x in brands:
+                    items = items.filter(brand=x)
+                context['brands'] = True
+            context['object_list'] = items.distinct()
+        return context
+
+    # def get_queryset(self):
+    #     qs =  super().get_queryset()
 
 
 class ContactView(View):
