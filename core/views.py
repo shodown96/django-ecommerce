@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, FilterForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Wishlist
 
 import random
 import string
@@ -511,6 +511,30 @@ def remove_single_item_from_cart(request, slug):
     else:
         messages.info(request, "You do not have an active order")
         return redirect("core:product", slug=slug)
+
+
+@login_required
+def add_to_wishlist(request, slug):
+    item = get_object_or_404(Item, slug=slug)
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    if item not in wishlist.items.all():
+        wishlist.items.add(item)
+        messages.info(request, "This Item was added to your wishlist")
+    else:
+        messages.info(request, "This Item is already in your wishlist")
+    return redirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def remove_from_wishlist(request, slug):
+    item = get_object_or_404(Item, slug=slug)
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    if item in wishlist.items.all():
+        wishlist.items.remove(item)
+        messages.info(request, "This Item has been from your wishlist")
+    else:
+        messages.error(request, "This Item is not in your wishlist", "danger")
+    return redirect(request.META['HTTP_REFERER'])
 
 
 def get_coupon(request, code):

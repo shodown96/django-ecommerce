@@ -111,7 +111,7 @@
                 <label for="customRange1">Price range</label>
                 <div class="d-flex justify-content-center my-4">
                   <div class="w-75">
-                    <input type="range" class="custom-range" id="customRange1" min="0" max="200">
+                    <input type="range" class="custom-range" id="customRange1" min="0" max="5000">
                   </div>
                   <span class="font-weight-bold text-primary ml-2 valueSpan"></span>
                 </div>
@@ -178,13 +178,44 @@
                   <a href="#" class="badge blue col-4 p-2 m-1">Men's hats</a>
                   <a href="#" class="badge blue col-4 p-2 m-1">Backpack</a>
                 </div>
-              </div>
+              </div><br>
+
               <form action="" method="GET">
-                {% for field in form %}
-                {{field.label_tag}}<br>
-                {{field}}<br>
-                {% endfor %}
-                <input type="submit" value="Filter" class="btn btn-primary">
+                <p class="fw-title">Categories {{form.category}}</p>
+
+                <h4 class="fw-title">Brands</h4>
+                <div class="row">
+                  {% for field in form.brands %}
+                      <div class="cs-item col-6">
+                      {{field}}
+                      <label class="cs-black" for="cs-black">{{field.label_tag}}</label>
+                    </div>
+                  <br>
+                  {% endfor %}
+                </div>
+
+                <h4 class="fw-title">Colors</h4>
+                <div class="row">
+                  {% for field in form.colors %}
+                      <div class="cs-item col-6">
+                      {{field}}
+                      <label class="cs-black" for="cs-black">{{field.label_tag}}</label>
+                    </div>
+                  <br>
+                  {% endfor %}
+                </div>
+
+                <h4 class="fw-title">Sizes</h4>
+                <div class="row">
+                  {% for field in form.sizes %}
+                      <div class="cs-item col-6">
+                      {{field}}
+                      <label class="cs-black" for="cs-black">{{field.label_tag}}</label>
+                    </div>
+                  <br>
+                  {% endfor %}
+                </div>
+                <input type="submit" value="Filter" class="btn btn-primary"><br>
               </form>
             </div>
           </div>

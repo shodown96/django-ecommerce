@@ -1,6 +1,5 @@
 from django import template
-from core.models import Order
-
+from core.models import *
 register = template.Library()
 
 
@@ -23,3 +22,8 @@ def query_transform(request, **kwargs):
             updated.pop(k, 0)
 
     return updated.urlencode()
+
+
+@register.simple_tag
+def labels():
+    return LABEL_CHOICES

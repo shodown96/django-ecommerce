@@ -15,6 +15,10 @@ urlpatterns = [
     path('remove-from-cart/<slug>/', remove_from_cart, name='remove-from-cart'),
     path('remove-item-from-cart/<slug>/', remove_single_item_from_cart,
          name='remove-single-item-from-cart'),
+    path('add-to-wishlist/<slug>/', add_to_wishlist, name='add-to-wishlist'),
+    path('remove-from-wishlist/<slug>/',
+         remove_from_wishlist, name='remove-from-wishlist'),
+
     path('payment/<payment_option>/', PaymentView.as_view(), name='payment'),
     path('request-refund/', RequestRefundView.as_view(), name='request-refund')
 ]

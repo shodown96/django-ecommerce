@@ -82,6 +82,21 @@ class Item(models.Model):
             'slug': self.slug
         })
 
+    def get_add_to_wishlist_url(self):
+        return reverse("core:add-to-wishlist", kwargs={
+            'slug': self.slug
+        })
+
+    def get_remove_from_wishlist_url(self):
+        return reverse("core:remove-from-wishlist", kwargs={
+            'slug': self.slug
+        })
+
+    def get_final_price(self):
+        if self.discount_price:
+            return self.discount_price
+        return self.price
+
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -152,6 +167,18 @@ class Order(models.Model):
         return total
 
 
+class Wishlist(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    items = models.ManyToManyField(Item)
+
+    def get_total(self):
+        total = 0
+        for item in self.items.all():
+            total += item.get_final_price()
+        return total
+
+
 class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
@@ -164,6 +191,9 @@ class Address(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def get_full_address(self):
+        return f"{self.apartment_address}, {self.street_address}, {self.country}"
 
     class Meta:
         verbose_name_plural = 'Addresses'
