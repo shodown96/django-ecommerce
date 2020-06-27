@@ -24,8 +24,7 @@ def wishlist(request):
 
 @login_required
 def orders(request):
-    order_list = request.user.order_set.all()
-    print(order_list)
+    order_list = request.user.order_set.all().order_by("-ordered_date")
     page = request.GET.get("page")
     paginator = Paginator(order_list, 10)
     orders = paginator.get_page(page)

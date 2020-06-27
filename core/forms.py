@@ -65,7 +65,7 @@ class PaymentForm(forms.Form):
 
 class FilterForm(forms.Form):
     category = forms.CharField(widget=forms.Select(
-        choices=CATEGORY_CHOICES), required=False)
+        choices=CATEGORY_CHOICES, attrs={'class': 'custom-select'}), required=False)
     tag = forms.CharField(required=False)
     brands = forms.MultipleChoiceField(
         choices=BRANDS, required=False, widget=forms.CheckboxSelectMultiple)

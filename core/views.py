@@ -124,6 +124,8 @@ class CheckoutView(View):
                         set_default_shipping = form.cleaned_data.get(
                             'set_default_shipping')
                         if set_default_shipping:
+                            Address.objects.filter(
+                                default=True, address_type="S").update(default=False)
                             shipping_address.default = True
                             shipping_address.save()
 
@@ -187,6 +189,8 @@ class CheckoutView(View):
                         set_default_billing = form.cleaned_data.get(
                             'set_default_billing')
                         if set_default_billing:
+                            Address.objects.filter(
+                                default=True, address_type="B").update(default=False)
                             billing_address.default = True
                             billing_address.save()
 
