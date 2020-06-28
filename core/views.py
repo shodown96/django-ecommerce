@@ -595,8 +595,11 @@ class RequestRefundView(View):
                 refund.save()
 
                 messages.info(self.request, "Your request was received.")
-                return redirect("core:request-refund")
+                return redirect(self.request.META['HTTP_REFERER'])
 
             except ObjectDoesNotExist:
                 messages.info(self.request, "This order does not exist.")
-                return redirect("core:request-refund")
+                return redirect(self.request.META['HTTP_REFERER'])
+        else:
+            messages.error(self.request, form.errors, "danger")
+            return redirect(self.request.META['HTTP_REFERER'])

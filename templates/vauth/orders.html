@@ -8,7 +8,7 @@
     <div class="row">
         {% for order in orders %}
         <div class="col-lg-4">
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-body">
                     <h3 class="card-title">Order {{forloop.counter}}</h3>
                     <p class="card-text">Ref Code:{{order.ref_code}}</p>
@@ -63,6 +63,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form action="{% url 'core:request-refund' %}" method="post">
+        {% csrf_token %}
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -71,18 +72,18 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                        <div class="md-form md-outline">
+                        <div class="md-form md-outline validate">
                             <!-- <i class="fa fa-tag prefix"></i> -->
-                            <input type="text" id="id_ref_code" class="form-control mb-4" placeholder="Reference code">
+                            <input type="text" name="ref_code" id="id_ref_code" class="form-control mb-4" placeholder="Reference code">
                             <label for="id_ref_code">Reference code</label>
                         </div>
-                        <div class="md-form md-outline">
+                        <div class="md-form md-outline validate">
                             <!-- <i class="fas fa-envelope prefix"></i> -->
-                            <input type="email" id="id_email" class="form-control mb-4" value="{{user.email}}">
+                            <input type="email" name="email" id="id_email" class="form-control mb-4" value="{{user.email}}" required>
                             <label for="id_email">Email</label>
                         </div>
-                        <div class="md-form  md-outline">
-                            <textarea id="id_message" class="form-control mb-4 md-textarea"></textarea>
+                        <div class="md-form  md-outline validate">
+                            <textarea id="id_message" name="message" class="form-control mb-4 md-textarea" required></textarea>
                             <label for="textarea">Message</label>
                         </div>
                 </div>
@@ -103,7 +104,7 @@
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-title').text('Order ' + recipient)
         modal.find('.modal-body input[id=id_ref_code]').val(recipient)
     })
 </script>

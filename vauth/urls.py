@@ -8,4 +8,6 @@ urlpatterns = [
     path("orders/", orders, name="orders"),
     path("addresses/", addresses, name="addresses"),
     path("profile/", profile, name="profile"),
+    path("address/delete/<int:ad_id>/", delete_address, name="del_addr"),
+    path("address/edit/<int:ad_id>/", edit_address, name="edit_addr"),
 ]

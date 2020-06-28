@@ -1,26 +1,29 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% block head_title %}Address{% endblock %}
 
 {% block content %}
 
 <div class="container">
-    <button type="button" class="btn btn-outline-primary waves-effect">New Address</button>
+    <button type="button" data-toggle="modal" data-target="#newModal" class="btn btn-outline-primary waves-effect">New Address</button>
     <h2 class="h1-responsive font-weight-bold text-center my-5">Delivery Address</h2>
     <div class="row">
         {% for address in addresses %}
         <div class="col-lg-4">
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-body">
                     <h3 class="card-title">Address {{forloop.counter}}</h3>
                     <p class="card-text">User: {{address.user}}</p>
                     <p class="card-text">Address: {{address.get_full_address}}</p>
                     <p class="card-text">Type: {{address.get_address_type_display}}</p>
-                    <p class="card-text">Deafault: {{address.default}}</p>
+                    <p class="card-text">Default: {{address.default}}</p>
 
-                    <p class="btn btn-info" data-toggle="modal" data-target="#refundModal" data-ref="{{address.id}}">
+                    <p class="btn btn-info" data-toggle="modal" data-target="#editModal" data-id="{{address.id}}"
+                    data-street="{{address.street_address}}" data-apartment="{{address.apartment}}"
+                    data-type="{{address.address.type}}" data-default="{{address.default}}">
                         Edit</p>
-                    <p class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-ref="{{address.id}}">
-                        DeLETE</p>
+                    <p class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{address.id}}">
+                        Delete</p>
                 </div>
             </div>
         </div>
@@ -58,10 +61,47 @@
     {% endif %}
 </div>
 <!-- Modal -->
-<div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form action="{% url 'core:request-refund' %}" method="post">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% for field in form %}
+                        {% if field == form.default %}
+                            {{field.label_tag}}
+                            {{field}}
+                        {% elif field == form.country or field == form.address_type%}
+                            {{field.label_tag}}
+                            {{field|add_class:"browser-default custom-select mb-2"}}
+                        {% else %}
+                            <div class="md-form md-outline">
+                                {{field|add_class:"form-control"}}
+                                {{field.label_tag}}
+                            </div>                    
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -70,20 +110,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="md-form md-outline">
-                        <!-- <i class="fa fa-tag prefix"></i> -->
-                        <input type="text" id="id_ref_code" class="form-control mb-4" placeholder="Reference code">
-                        <label for="id_ref_code">Reference code</label>
-                    </div>
-                    <div class="md-form md-outline">
-                        <!-- <i class="fas fa-envelope prefix"></i> -->
-                        <input type="email" id="id_email" class="form-control mb-4" value="{{user.email}}">
-                        <label for="id_email">Email</label>
-                    </div>
-                    <div class="md-form  md-outline">
-                        <textarea id="id_message" class="form-control mb-4 md-textarea"></textarea>
-                        <label for="textarea">Message</label>
-                    </div>
+                    {% for field in form %}
+                        {% if field == form.default %}
+                            {{field.label_tag}}
+                            {{field}}
+                        {% elif field == form.country or field == form.address_type%}
+                            {{field.label_tag}}
+                            {{field|add_class:"browser-default custom-select mb-2"}}
+                        {% else %}
+                            <div class="md-form md-outline">
+                                {{field|add_class:"form-control"}}
+                                {{field.label_tag}}
+                            </div>                    
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -93,17 +133,43 @@
         </form>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body">
+               Are you sure
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="" class="btn btn-danger" id="delete">Delete</a>
+           </div>
+       </div>
+   </div>
+</div>
+
 {% endblock %}
 {% block extra_scripts %}
 <script>
-    $('#refundModal').on('show.bs.modal', function (event) {
+    $('#editModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('ref') // Extract info from data-* attributes
+        var id = button.data('id') // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input[id=id_ref_code]').val(recipient)
+        modal.find('form').attr("href", "/vauth/address/edit/" + id)
+    })
+        $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id') // Extract info from data-* attributes
+        var modal = $(this)
+        modal.find('#delete').attr("href", "/vauth/address/delete/" + id)
     })
 </script>
 {% endblock extra_scripts %}

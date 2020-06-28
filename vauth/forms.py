@@ -2,6 +2,7 @@ from django import forms
 from .validators import validate_file_extension
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from core.models import Address
 # from ckeditor.widgets import CKEditorWidget
 
 
@@ -33,3 +34,9 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=(forms.PasswordInput()))
     remember = forms.CharField(widget=(forms.CheckboxInput))
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        exclude = ['user']
