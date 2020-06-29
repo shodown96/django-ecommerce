@@ -5,7 +5,8 @@
 {% block content %}
 
 <div class="container">
-    <button type="button" data-toggle="modal" data-target="#newModal" class="btn btn-outline-primary waves-effect">New Address</button>
+    <button type="button" data-toggle="modal" data-target="#newModal" class="btn btn-outline-primary waves-effect">New
+        Address</button>
     <h2 class="h1-responsive font-weight-bold text-center my-5">Delivery Address</h2>
     <div class="row">
         {% for address in addresses %}
@@ -19,8 +20,9 @@
                     <p class="card-text">Default: {{address.default}}</p>
 
                     <p class="btn btn-info" data-toggle="modal" data-target="#editModal" data-id="{{address.id}}"
-                    data-street="{{address.street_address}}" data-apartment="{{address.apartment}}"
-                    data-type="{{address.address.type}}" data-default="{{address.default}}">
+                        data-street="{{address.street_address}}" data-apartment="{{address.apartment_address}}"
+                        data-type="{{address.address_type}}" data-default="{{address.default}}"
+                        data-country="{{address.country}}" data-zip="{{address.zip}}">
                         Edit</p>
                     <p class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{address.id}}">
                         Delete</p>
@@ -75,18 +77,18 @@
                 </div>
                 <div class="modal-body">
                     {% for field in form %}
-                        {% if field == form.default %}
-                            {{field.label_tag}}
-                            {{field}}
-                        {% elif field == form.country or field == form.address_type%}
-                            {{field.label_tag}}
-                            {{field|add_class:"browser-default custom-select mb-2"}}
-                        {% else %}
-                            <div class="md-form md-outline">
-                                {{field|add_class:"form-control"}}
-                                {{field.label_tag}}
-                            </div>                    
-                        {% endif %}
+                    {% if field == form.default %}
+                    {{field.label_tag}}
+                    {{field}}
+                    {% elif field == form.country or field == form.address_type%}
+                    {{field.label_tag}}
+                    {{field|add_class:"browser-default custom-select mb-2"}}
+                    {% else %}
+                    <div class="md-form md-outline">
+                        {{field|add_class:"form-control"}}
+                        {{field.label_tag}}
+                    </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
                 <div class="modal-footer">
@@ -102,27 +104,28 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form action="" method="post">
+            {% csrf_token %}
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     {% for field in form %}
-                        {% if field == form.default %}
-                            {{field.label_tag}}
-                            {{field}}
-                        {% elif field == form.country or field == form.address_type%}
-                            {{field.label_tag}}
-                            {{field|add_class:"browser-default custom-select mb-2"}}
-                        {% else %}
-                            <div class="md-form md-outline">
-                                {{field|add_class:"form-control"}}
-                                {{field.label_tag}}
-                            </div>                    
-                        {% endif %}
+                    {% if field == form.default %}
+                    {{field.label_tag}}
+                    {{field}}
+                    {% elif field == form.country or field == form.address_type%}
+                    {{field.label_tag}}
+                    {{field|add_class:"browser-default custom-select mb-2"}}
+                    {% else %}
+                    <div class="md-form">
+                        {{field|add_class:"form-control"|attr:"placeholder:"}}
+                        {{field.label_tag}}
+                    </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
                 <div class="modal-footer">
@@ -134,42 +137,69 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-       <div class="modal-content">
-           <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                   <span aria-hidden="true">&times;</span>
-               </button>
-           </div>
-           <div class="modal-body">
-               Are you sure
-           </div>
-           <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <a href="" class="btn btn-danger" id="delete">Delete</a>
-           </div>
-       </div>
-   </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-danger" id="delete">Delete</a>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock %}
 {% block extra_scripts %}
 <script>
     $('#editModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var id = button.data('id') // Extract info from data-* attributes
+        var street = button.data('street')
+        var apartment = button.data('apartment')
+        var type = button.data('type')
+        var d = button.data('default')
+        var country = button.data('country')
+        var zip = button.data('zip')
+
+        // $.ajax({
+        //     dataType: "json",
+        //     url: "",
+        //     method: "GET",
+        //     success: function (r) {
+        //         modal.find("id_country")
+        //     }
+        // })
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('form').attr("href", "/vauth/address/edit/" + id)
+        modal.find('form').attr("action", "/vauth/address/edit/" + id + "/")
+        modal.find("#id_street_address").attr('value', street)
+        modal.find("#id_apartment_address").attr("value", apartment)
+        if (d == "True") {
+            modal.find("#id_default").attr("checked", "checked")
+        }
+        modal.find("#id_address_type").val(type).attr("selected", "selected")
+        modal.find("#id_country").val(country).attr("selected", "selected")
+        modal.find("#id_zip").attr("value", zip)
+        console.log(modal.find('form').attr("action"))
     })
-        $('#deleteModal').on('show.bs.modal', function (event) {
+    $('#deleteModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var id = button.data('id') // Extract info from data-* attributes
         var modal = $(this)
-        modal.find('#delete').attr("href", "/vauth/address/delete/" + id)
+        modal.find('#delete').attr("href", "/vauth/address/delete/" + id + "/")
     })
 </script>
 {% endblock extra_scripts %}
+<select name="" id="">
+    <option value=""></option>
+</select>

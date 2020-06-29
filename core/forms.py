@@ -23,7 +23,7 @@ class CheckoutForm(forms.Form):
 
     billing_address = forms.CharField(required=False)
     billing_address2 = forms.CharField(required=False)
-    billing_country = CountryField(blank_label='(select country)').formfield(
+    billing_country = CountryField(blank_label='Select country').formfield(
         required=False,
         widget=CountrySelectWidget(attrs={
             'class': 'custom-select d-block w-100',
