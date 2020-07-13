@@ -39,7 +39,7 @@ def is_valid(param):
     return param != '' and param is not None
 
 
-class CheckoutView(View):
+class CheckoutView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -215,7 +215,7 @@ class CheckoutView(View):
             return redirect("core:order-summary")
 
 
-class PaymentView(View):
+class PaymentView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         order = Order.objects.get(user=self.request.user, ordered=False)
         if order.billing_address:
@@ -377,25 +377,30 @@ class ShopView(ListView):
             colors = self.request.GET.getlist("colors")
             sizes = self.request.GET.getlist("sizes")
             brands = self.request.GET.getlist("brands")
+            price = self.request.GET.get("price")
             if is_valid(category):
                 items = items.filter(category=category)
-                context['category'] = True
+                context['category'] = category
             if is_valid(tag):
                 items = items.filter(tag=tag)
-                context['tag'] = True
-            if is_valid_form(colors):
-                for x in colors:
-                    print(x)
-                    # items = items.filter(color=x)
-                context['tags'] = True
-            if is_valid_form(sizes):
-                for x in sizes:
-                    items = items.filter(size=x)
-                context['sizes'] = True
+                context['tag'] = tag
+            if is_valid(price):
+                items = items.filter(price__lte=price)
+                context['price'] = price
             if is_valid_form(brands):
                 for x in brands:
                     items = items.filter(brand=x)
-                context['brands'] = True
+                context['brands'] = brands
+            if is_valid_form(colors):
+                for x in colors:
+                    print(x)
+                    items = items.filter(color=x)
+                context['colors'] = colors
+            if is_valid_form(sizes):
+                for x in sizes:
+                    items = items.filter(size=x)
+                context['sizes'] = sizes
+
             context['object_list'] = items.distinct()
         return context
 

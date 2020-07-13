@@ -58,132 +58,19 @@
           <div class="card text-left">
             <div class="card-header primary-color text-white">Filter</div>
             <div class="card-body">
-              <div class="filter-widget">
-                <h4 class="fw-title">Categories</h4>
-                <ul class="nav flex-column py-2">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#!">Active</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#!">Men</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#!">Women</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#!">Kids</a>
-                  </li>
-              </div>
-              <div class="filter-widget py-2">
-                <h4 class="fw-title">Brand</h4>
-                <div class="fw-brand-check">
-                  <div class="bc-item">
-                    <label for="bc-calvin">
-                      <input type="checkbox" id="bc-calvin">
-                      <span class="checkmark"></span>
-                      Calvin Klein
-                    </label>
-                  </div>
-                  <div class="bc-item">
-                    <label for="bc-diesel">
-                      <input type="checkbox" id="bc-diesel">
-                      <span class="checkmark"></span>
-                      Diesel
-                    </label>
-                  </div>
-                  <div class="bc-item">
-                    <label for="bc-polo">
-                      <input type="checkbox" id="bc-polo">
-                      <span class="checkmark"></span>
-                      Polo
-                    </label>
-                  </div>
-                  <div class="bc-item">
-                    <label for="bc-tommy">
-                      <input type="checkbox" id="bc-tommy">
-                      <span class="checkmark"></span>
-                      Tommy Hilfiger
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="filter-widget py-2">
-                <h4 class="fw-title">Price</h4>
-                <label for="customRange1">Price range</label>
-                <div class="d-flex justify-content-center my-4">
-                  <div class="w-75">
-                    <input type="range" class="custom-range" id="customRange1" min="0" max="5000">
-                  </div>
-                  <span class="font-weight-bold text-primary ml-2 valueSpan"></span>
-                </div>
-              </div>
-              <div class="filter-widget py-2">
-                <h4 class="fw-title">Color</h4>
-                <div class="fw-color-choose row">
-                  <div class="cs-item col-6">
-                    <input type="checkbox" id="cs-black">
-                    <label class="cs-black" for="cs-black">Black</label>
-                  </div>
-                  <div class="cs-item col-6">
-                    <input type="checkbox" id="cs-violet">
-                    <label class="cs-violet" for="cs-violet">Violet</label>
-                  </div>
-                  <div class="cs-item col-6">
-                    <input type="checkbox" id="cs-blue">
-                    <label class="cs-blue" for="cs-blue">Blue</label>
-                  </div>
-                  <div class="cs-item col-6">
-                    <input type="checkbox" id="cs-yellow">
-                    <label class="cs-yellow" for="cs-yellow">Yellow</label>
-                  </div>
-                  <div class="cs-item col-6">
-                    <input type="checkbox" id="cs-red">
-                    <label class="cs-red" for="cs-red">Red</label>
-                  </div>
-                  <div class="cs-item col-6">
-                    <input type="checkbox" id="cs-green">
-                    <label class="cs-green" for="cs-green">Green</label>
-                  </div>
-                </div>
-              </div>
-              <div class="filter-widget py-2 text-uppercase">
-                <h4 class="fw-title">Size</h4>
-                <div class="fw-size-choose  row">
-                  <div class="sc-item col-3">
-                    <input type="checkbox" id="s-size">
-                    <label for="s-size">s</label>
-                  </div>
-                  <div class="sc-item col-3">
-                    <input type="checkbox" id="m-size">
-                    <label for="m-size">m</label>
-                  </div>
-                  <div class="sc-item col-3">
-                    <input type="checkbox" id="l-size">
-                    <label for="l-size">l</label>
-                  </div>
-                  <div class="sc-item col-3">
-                    <input type="checkbox" id="xs-size">
-                    <label for="xs-size">xs</label>
-                  </div>
-                </div>
-              </div>
-              <a href="#" class="btn btn-primary">Apply</a>
-              <div class="filter-widget py-2">
-                <h4 class="fw-title">Tags</h4>
-                <div class="fw-tags row px-0 text-center">
-                  <a href="#" class="badge blue col-4 p-2 m-1">Towel</a>
-                  <a href="#" class="badge blue col-4 p-2 m-1">Shoes</a>
-                  <a href="#" class="badge blue col-4 p-2 m-1">Coat</a>
-                  <a href="#" class="badge blue col-4 p-2 m-1">Dresses</a>
-                  <a href="#" class="badge blue col-4 p-2 m-1">Trousers</a>
-                  <a href="#" class="badge blue col-4 p-2 m-1">Men's hats</a>
-                  <a href="#" class="badge blue col-4 p-2 m-1">Backpack</a>
-                </div>
-              </div><br>
 
               <form action="" method="GET">
                 <p class="fw-title">Categories {{form.category}}</p>
 
+                <div class="filter-widget py-2">
+                  <h4 class="fw-title">Price Limit</h4>
+                  <div class="d-flex justify-content-center">
+                    <div class="w-100">
+                      <input type="range" class="custom-range" name="price" id="customRange1" min="0" max="2500" value="2500">
+                    </div>
+                    <span class="font-weight-bold text-primary ml-2 valueSpan"></span>
+                  </div>
+                </div>
                 <h4 class="fw-title">Brands</h4>
                 <div class="row">
                   {% for field in form.brands %}
@@ -216,7 +103,20 @@
                   <br>
                   {% endfor %}
                 </div>
-                <input type="submit" value="Filter" class="btn btn-primary"><br>
+                <button type="submit" class="btn text-white info-color-dark btn-block">Filter</button>
+                
+                <div class="filter-widget p-2">
+                  <h4 class="fw-title">Tags</h4>
+                  <div class="fw-tags row px-0 text-center">
+                    <a href="#" class="badge blue col-4 p-2 m-1">Towel</a>
+                    <a href="#" class="badge blue col-4 p-2 m-1">Shoes</a>
+                    <a href="#" class="badge blue col-4 p-2 m-1">Coat</a>
+                    <a href="#" class="badge blue col-4 p-2 m-1">Dresses</a>
+                    <a href="#" class="badge blue col-4 p-2 m-1">Trousers</a>
+                    <a href="#" class="badge blue col-4 p-2 m-1">Men's hats</a>
+                    <a href="#" class="badge blue col-4 p-2 m-1">Backpack</a>
+                  </div>
+                </div><br>
               </form>
             </div>
           </div>

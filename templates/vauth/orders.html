@@ -25,6 +25,8 @@
                 </div>
             </div>
         </div>
+        {% empty %}
+        <p>You have no orders yet</p>
         {% endfor %}
     </div>
     {% if is_paginated %}
